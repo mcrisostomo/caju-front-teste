@@ -70,6 +70,8 @@ const DashboardPage = () => {
   const handleLoadingData = async () => {
     refLoading.current.setAttribute('style', 'display: flex');
 
+    setData([]);
+
     await axios
       .get(`${BASE_URL_API}/registrations`)
       .then((e: any) => {
