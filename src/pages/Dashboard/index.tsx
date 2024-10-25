@@ -14,16 +14,30 @@ const DashboardPage = () => {
 
   const refLoading = useRef(null);
 
-  const handleCPFSearch = (e: any) => {
+  const applyCpfMask = (cpf: string) => {
+    // Remove caracteres não numéricos e aplica o formato
+    cpf = cpf.replace(/[^\d]/g, '');
+    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  };
+
+  const handleCPFSearch = async (e: any) => {
     const cpf = e.target.value;
+    const eTarget = e.target as HTMLInputElement;
     const isCPF = cpfValidator(cpf);
 
-    if (e.target.value.length === 11) {
+    eTarget.value = applyCpfMask(cpf);
+
+    const cpfWithoutMask = cpf
+      .replace('.', '')
+      .replace('.', '')
+      .replace('-', '');
+
+    if (e.target.value.length === 14) {
       if (isCPF) {
         refLoading.current.setAttribute('style', 'display: flex');
 
-        axios
-          .get(`${BASE_URL_API}/registrations?cpf=${e.target.value}`)
+        await axios
+          .get(`${BASE_URL_API}/registrations?cpf=${cpfWithoutMask}`)
           .then((e: any) => {
             setData([]);
 
@@ -53,8 +67,10 @@ const DashboardPage = () => {
     }
   };
 
-  const handleLoadingData = () => {
-    axios
+  const handleLoadingData = async () => {
+    refLoading.current.setAttribute('style', 'display: flex');
+
+    await axios
       .get(`${BASE_URL_API}/registrations`)
       .then((e: any) => {
         refLoading.current.setAttribute('style', 'display: none');
@@ -73,10 +89,10 @@ const DashboardPage = () => {
       });
   };
 
-  const handleReproved = (value: any) => {
+  const handleReproved = async (value: any) => {
     refLoading.current.setAttribute('style', 'display: flex');
 
-    axios
+    await axios
       .put(`${BASE_URL_API}/registrations/${value.id}`, {
         id: value.id,
         admissionDate: value.admissionDate,
@@ -107,10 +123,10 @@ const DashboardPage = () => {
       });
   };
 
-  const handleApproved = (value: any) => {
+  const handleApproved = async (value: any) => {
     refLoading.current.setAttribute('style', 'display: flex');
 
-    axios
+    await axios
       .put(`${BASE_URL_API}/registrations/${value.id}`, {
         id: value.id,
         admissionDate: value.admissionDate,
@@ -141,10 +157,10 @@ const DashboardPage = () => {
       });
   };
 
-  const handleReview = (value: any) => {
+  const handleReview = async (value: any) => {
     refLoading.current.setAttribute('style', 'display: flex');
 
-    axios
+    await axios
       .put(`${BASE_URL_API}/registrations/${value.id}`, {
         id: value.id,
         admissionDate: value.admissionDate,
@@ -175,10 +191,10 @@ const DashboardPage = () => {
       });
   };
 
-  const handleDelete = (value: any) => {
+  const handleDelete = async (value: any) => {
     refLoading.current.setAttribute('style', 'display: flex');
 
-    axios
+    await axios
       .delete(`${BASE_URL_API}/registrations/${value.id}`)
       .then((e: any) => {
         refLoading.current.setAttribute('style', 'display: none');

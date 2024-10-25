@@ -24,7 +24,7 @@ export const SearchBar = (props: Props) => {
       <TextField
         placeholder="Digite um CPF válido"
         onKeyUp={props.handleCPFSearch}
-        maxLength={11}
+        maxLength={14}
       />
       <S.Actions>
         <IconButton aria-label="refetch" onClick={props.handleLoadingData}>
