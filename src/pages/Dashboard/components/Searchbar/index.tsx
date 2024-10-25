@@ -9,6 +9,7 @@ import * as S from './styles';
 type Props = {
   registrations?: any[];
   handleCPFSearch?: any;
+  handleLoadingData?: any;
 };
 
 export const SearchBar = (props: Props) => {
@@ -22,10 +23,11 @@ export const SearchBar = (props: Props) => {
     <S.Container>
       <TextField
         placeholder="Digite um CPF válido"
-        onChange={props.handleCPFSearch}
+        onKeyUp={props.handleCPFSearch}
+        maxLength={11}
       />
       <S.Actions>
-        <IconButton aria-label="refetch">
+        <IconButton aria-label="refetch" onClick={props.handleLoadingData}>
           <HiRefresh />
         </IconButton>
         <Button onClick={() => goToNewAdmissionPage()}>Nova Admissão</Button>
