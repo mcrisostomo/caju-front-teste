@@ -1,4 +1,5 @@
 import React, { InputHTMLAttributes } from 'react';
+import { HiCheckCircle } from 'react-icons/hi';
 import styled from 'styled-components';
 
 export const Input = styled.input`
@@ -20,9 +21,24 @@ export const Input = styled.input`
     box-shadow: inset 0 0 0 1px #007c89;
   }
 `;
+
+export const DivConfirmation = styled.div`
+  display: flex;
+  width: 100%;
+  margin-top: -38px;
+  height: 36px;
+  align-items: center;
+  justify-content: end;
+
+  svg {
+    color: #64a98c;
+  }
+`;
+
 type Props = {
   label?: string;
   error?: string;
+  confirmation?: string;
 } & InputHTMLAttributes<any>;
 
 const TextField = (props: Props) => {
@@ -30,6 +46,11 @@ const TextField = (props: Props) => {
     <div>
       <label htmlFor={props.id}>{props.label}</label>
       <Input {...props} />
+      {props.confirmation === 'true' && (
+        <DivConfirmation>
+          <HiCheckCircle />
+        </DivConfirmation>
+      )}
       <span style={{ fontSize: 12, color: 'red' }}>{props.error}</span>
     </div>
   );

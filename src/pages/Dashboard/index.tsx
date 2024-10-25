@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { HiRefresh } from 'react-icons/hi';
 import Modal from '~/components/Modal';
-import cpfValidator from '~/components/CPFValidator';
+import validators from '~/components/Validators';
 
 const DashboardPage = () => {
   const BASE_URL_API: string = 'http://localhost:3000';
@@ -14,18 +14,12 @@ const DashboardPage = () => {
 
   const refLoading = useRef(null);
 
-  const applyCpfMask = (cpf: string) => {
-    // Remove caracteres não numéricos e aplica o formato
-    cpf = cpf.replace(/[^\d]/g, '');
-    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-  };
-
   const handleCPFSearch = async (e: any) => {
     const cpf = e.target.value;
     const eTarget = e.target as HTMLInputElement;
-    const isCPF = cpfValidator(cpf);
+    const isCPF = validators().cpfValidator(cpf);
 
-    eTarget.value = applyCpfMask(cpf);
+    eTarget.value = validators().applyCpfMask(cpf);
 
     const cpfWithoutMask = cpf
       .replace('.', '')

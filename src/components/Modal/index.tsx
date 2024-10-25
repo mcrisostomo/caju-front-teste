@@ -2,7 +2,7 @@ import Swal from 'sweetalert2';
 
 export default function Modal(title: string, text: string) {
   const confirmation = () => {
-    Swal.fire({
+    return Swal.fire({
       title: title,
       text: text,
       icon: 'info',
@@ -13,7 +13,7 @@ export default function Modal(title: string, text: string) {
   };
 
   const success = () => {
-    Swal.fire({
+    return Swal.fire({
       title: title,
       text: text,
       icon: 'success',
@@ -24,7 +24,7 @@ export default function Modal(title: string, text: string) {
   };
 
   const error = () => {
-    Swal.fire({
+    return Swal.fire({
       title: title,
       text: text,
       icon: 'error',
